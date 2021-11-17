@@ -227,7 +227,7 @@ key 时一定会把 minFreq 更新成 1，所以说即便这里 minFreq 变了�
 这个映射。如果这个 freq 恰好是 minFreq，说明 minFreq 变量需要更新。 能不能快速找到当前的 minFreq 呢？这里是可以的，因为我们刚才把 key 的 freq 加了 1
 嘛，所以 minFreq 也加 1 就行了。 至此，经过层层拆解，LFU 算法就完成了。
 
-![作业 460.LFU缓存机制（困难）](https://leetcode-cn.com/problems/lfu-cache/)
+[作业 460.LFU缓存机制（困难）](https://leetcode-cn.com/problems/lfu-cache/)
 
-![文章链接](https://app6aigdwnl3832.h5.xiaoeknow.com/v1/course/text/i_614d9a57e4b0dfaf7fa719aa?type=2)
+[文章链接](https://app6aigdwnl3832.h5.xiaoeknow.com/v1/course/text/i_614d9a57e4b0dfaf7fa719aa?type=2)
 
