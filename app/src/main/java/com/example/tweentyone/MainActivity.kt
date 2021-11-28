@@ -47,9 +47,14 @@ class MainActivity : AppCompatActivity() {
             },
             null
         )
+        //这个本质上是调用的java的hashmap
+//        val hashm=HashMap<String,String>(3)
 
-        view.requestLayout()
+//       val kMap= hashMapOf<String,String>()
 
+//        view.requestLayout()
+//        val day19 = Day19()
+//        day19.test()
     }
 
 

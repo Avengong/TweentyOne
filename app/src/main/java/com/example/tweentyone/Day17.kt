@@ -7,6 +7,7 @@ class Day17 {
 
     var res = arrayListOf<ArrayList<Int>>()
 
+
     //    var objects = ArrayList<List<Int>>()
     fun permute(nums: IntArray?): List<List<Int?>?>? {
         //回溯算法解决全排列
