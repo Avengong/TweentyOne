@@ -1,11 +1,16 @@
 package com.example.binary_tree.simple;
 
 import android.opengl.Matrix;
+import android.os.Build;
 
 import com.example.TreeNode;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
+
+import androidx.annotation.RequiresApi;
 
 class Simple2 {
 
@@ -16,35 +21,181 @@ class Simple2 {
     }
 
     /**
-     * todo 路径和  回溯
+     * todo 左叶子之和
+     *
+     * @param root
+     * @return
+     */
+    int sum = 0;
+
+    public int sumOfLeftLeaves(TreeNode root) {
+        //如何判断左叶子？
+
+        travel(root);
+        return sum;
+    }
+
+    private void travel(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        TreeNode left = root.left;
+        if (left != null) {
+            if (left.left == null && left.right == null) {
+                //叶子节点
+                sum += left.val;
+            }
+        }
+        travel(root.left);
+        travel(root.right);
+    }
+
+    /**
+     * todo 二叉树的所有路径
+     *
+     * @param root
+     * @return
+     */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
+    public List<String> binaryTreePaths(TreeNode root) {
+        /**
+         * 递归实现
+         */
+//        List<String> res=new ArrayList<>();
+//        String str="";
+//        findPath(root,res,str);
+//
+//        return  res;
+
+        /**
+         * 广度优先
+         */
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        List<String> res = new ArrayList<>();
+        String str = "";
+        while (!queue.isEmpty()) {
+            TreeNode poll = queue.poll();
+            str += (str.isEmpty() ? "" : "->") + poll.val;
+            if (poll.left == null && poll.right == null) {
+                res.add(str);
+            }
+            if (poll.left != null) {
+                queue.offer(poll.left);
+            }
+            if (poll.right != null) {
+                queue.offer(poll.right);
+            }
+        }
+
+        return res;
+
+
+    }
+
+    private void findPath(TreeNode root, List<String> res, String str) {
+        str += (str.isEmpty() ? "" : "->") + root.val;
+        if (root.left == null && root.right == null) {
+            res.add(str);
+        }
+        findPath(root.left, res, str);
+        findPath(root.right, res, str);
+    }
+
+
+    /**
+     * todo 二叉搜索树的最近祖先
+     */
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        /**
+         * 1，两次遍历，分别记录达到p、q的路径。然后比较两个数组值大小相等的就是最近祖先。
+         */
+
+        /**
+         * 2, 一次遍历，递归实现。因为是二叉搜索树，所以只要判断p、q的不在同一个分支上即得到祖先。
+         */
+//        if (root == null) {
+//            return null;
+//        }
+//        if (p.val < root.val && q.val < root.val) {
+//            return lowestCommonAncestor(root.left, p, q);
+//        } else if (p.val > root.val && q.val > root.val) {
+//            return lowestCommonAncestor(root.right, p, q);
+//        } else {
+//            return root;
+//        }
+        /**
+         * 3, 一次遍历，非递归，迭代实现
+         */
+        while ((p.val - root.val) * (q.val - root.val) > 0) {
+            root = p.val - root.val > 0 ? root.right : root.left;
+        }
+        return root;
+
+    }
+
+
+    /**
+     * todo 路径和  遍历
      *
      * @param root
      * @param targetSum
      * @return
      */
     public boolean hasPathSum(TreeNode root, int targetSum) {
-
-        return getSum(root, targetSum, 0);
+        return getSum(root, targetSum);
 
     }
 
-    private boolean getSum(TreeNode root, int targetSum, int sum) {
+    private boolean getSum(TreeNode root, int targetSum) {
         if (root == null) {
-            return sum == targetSum;
+            return false;
         }
-        sum += root.val;
-        if (root.left == null && root.right == null) {
-            if (sum == targetSum) {
-                return true;
+//        targetSum -= root.val;
+//        if (root.left == null && root.right == null) {
+//            if (0 == targetSum) {
+//                return true;
+//            }
+//        }
+//        return getSum(root.left, targetSum) || getSum(root.right, targetSum);
+        /**
+         * 广度优先怎么实现
+         */
+        Queue<TreeNode> queue = new LinkedList<>();
+        Queue<Integer> queueVal = new LinkedList<>();
+        queue.offer(root);
+        queueVal.offer(root.val);
+        while (!queue.isEmpty()) {
+            TreeNode poll = queue.poll();
+            Integer sum = queueVal.poll();
+            if (poll.left == null && poll.right == null) {
+                if (targetSum == sum) {
+                    return true;
+                }
+                //为什么要continue呢？因为到这里都不相等，后面肯定不会再相等了。
+                continue;
             }
+
+            if (poll.left != null) {
+                queue.offer(poll.left);
+                queueVal.offer(sum + poll.left.val);
+            }
+            if (poll.right != null) {
+                queue.offer(poll.right);
+                queueVal.offer(sum + poll.right.val);
+            }
+
         }
-        return getSum(root.left, targetSum, sum) || getSum(root.right, targetSum, sum);
+
+        return false;
+
+
     }
+
 
     /**
      * todo 最短路径 ，广度优先啦
      */
-
     public int minDepth(TreeNode root) {
 
         if (root == null) {
