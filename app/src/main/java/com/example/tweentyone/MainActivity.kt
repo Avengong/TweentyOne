@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Choreographer
 import android.view.View
 import com.ztsdk.lib.two.Day1
+import com.ztsdk.lib.two.Day2
 import java.lang.reflect.Method
 
 class MainActivity : AppCompatActivity() {
@@ -55,7 +56,11 @@ class MainActivity : AppCompatActivity() {
 //        val day19 = Day19()
 //        day19.test()
 
-        var day1 = Day1()
+        var day = Day2()
+//        var aa= intArrayOf(1,1,1)
+        var aa = intArrayOf(1, 2, 3)
+
+        day.subarraySum(aa, 3)
 
 
     }
