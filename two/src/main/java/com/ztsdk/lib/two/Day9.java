@@ -65,13 +65,13 @@ public class Day9 {
 
         public int pop() {
             int size = mQueue.size();
-            while (size > 2) {
-
+            while (size > 1) {
+                if (size == 2) {
+                    top = mQueue.peek();
+                }
                 mQueue.offer(mQueue.poll());
                 size--;
             }
-            top = mQueue.peek();
-            mQueue.offer(mQueue.poll());
 
             return mQueue.poll();
         }
