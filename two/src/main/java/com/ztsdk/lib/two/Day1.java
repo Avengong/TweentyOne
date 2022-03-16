@@ -21,7 +21,7 @@ public class Day1 {
             }
             fast++;
         }
-        return -1;
+        return slow++;
     }
 
 
